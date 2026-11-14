@@ -49,7 +49,9 @@ public class NetworkRepository {
     public void insert(NetworkEntity network, RepositoryCallback callback) {
         executor.execute(() -> {
             try {
-                networkDao.insert(network);
+                // Room не проставляет autoGenerate-ключ в объект сам — переносим
+                // rowId в сущность, иначе вызывающий код видит id = 0.
+                network.id = networkDao.insert(network);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
                 callback.onError(context.getString(R.string.err_network_exists));

@@ -52,7 +52,7 @@ public class DeviceRepository {
     public void insert(DeviceEntity device, RepositoryCallback callback) {
         executor.execute(() -> {
             try {
-                deviceDao.insert(device);
+                device.id = deviceDao.insert(device);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
                 callback.onError(context.getString(R.string.err_device_exists));
