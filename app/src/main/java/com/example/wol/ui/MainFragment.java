@@ -16,10 +16,7 @@ import com.example.wol.data.db.DeviceEntity;
 import com.example.wol.data.db.NetworkEntity;
 import com.example.wol.databinding.FragmentMainBinding;
 import com.example.wol.domain.LaunchState;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -42,33 +39,20 @@ public class MainFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.action_edit_network) {
-                NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_main_to_networkEdit);
-                return true;
-            }
-            if (id == R.id.action_edit_device) {
-                NetworkEntity network = viewModel.selectedNetwork.getValue();
-                if (network == null) {
-                    snackbar(getString(R.string.select_network_first));
-                    return true;
-                }
-                Bundle args = new Bundle();
-                args.putLong("networkId", network.id);
-                NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_main_to_deviceEdit, args);
-                return true;
-            }
-            if (id == R.id.action_exit) {
+            if (item.getItemId() == R.id.action_exit) {
                 requireActivity().finishAndRemoveTask();
                 return true;
             }
             return false;
         });
 
-        binding.cardNetwork.setOnClickListener(v -> showNetworkPicker());
-        binding.cardDevice.setOnClickListener(v -> showDevicePicker());
+        // Переход в редакторы — тапами по карточкам «Сеть» и «Устройство».
+        // Пункты меню «Изменить сеть/устройство» убраны, чтобы не дублировать навигацию.
+        binding.cardNetwork.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(R.id.action_main_to_networkEdit));
+
+        binding.cardDevice.setOnClickListener(v -> openDeviceEditor());
+
         binding.buttonLaunch.setOnClickListener(v -> viewModel.launch());
 
         viewModel.selectedNetwork.observe(getViewLifecycleOwner(), network -> {
@@ -97,48 +81,20 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void showNetworkPicker() {
-        List<NetworkEntity> networks = viewModel.networks.getValue();
-        if (networks == null || networks.isEmpty()) {
-            snackbar(getString(R.string.no_networks));
-            return;
-        }
-
-        String[] names = new String[networks.size()];
-        for (int i = 0; i < networks.size(); i++) {
-            names[i] = networks.get(i).name;
-        }
-
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.select_network)
-                .setItems(names, (dialog, which) -> viewModel.selectNetwork(networks.get(which).id))
-                .setNegativeButton(R.string.cancel, null)
-                .show();
-    }
-
-    private void showDevicePicker() {
+    /**
+     * Открывает список устройств выбранной сети. Если сеть ещё не выбрана —
+     * подсказываем, что сначала нужно зайти в карточку «Сеть».
+     */
+    private void openDeviceEditor() {
         NetworkEntity network = viewModel.selectedNetwork.getValue();
         if (network == null) {
             snackbar(getString(R.string.select_network_first));
             return;
         }
-
-        List<DeviceEntity> devices = viewModel.devices.getValue();
-        if (devices == null || devices.isEmpty()) {
-            snackbar(getString(R.string.no_devices));
-            return;
-        }
-
-        String[] names = new String[devices.size()];
-        for (int i = 0; i < devices.size(); i++) {
-            names[i] = devices.get(i).name;
-        }
-
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.select_device)
-                .setItems(names, (dialog, which) -> viewModel.selectDevice(devices.get(which).id))
-                .setNegativeButton(R.string.cancel, null)
-                .show();
+        Bundle args = new Bundle();
+        args.putLong("networkId", network.id);
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_main_to_deviceEdit, args);
     }
 
     private void renderStatus(LaunchState state) {

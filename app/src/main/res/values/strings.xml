@@ -51,4 +51,23 @@
     <string name="cancel">Cancel</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_network_card">Open network list</string>
+    <string name="cd_device_card">Open device list</string>
+
+    <!-- Validation and error messages -->
+    <string name="err_name_empty">Name is empty</string>
+    <string name="err_invalid_ip">Invalid IP address</string>
+    <string name="err_invalid_port">Invalid port</string>
+    <string name="err_invalid_mac">Invalid MAC address</string>
+    <string name="err_mac_not_found">MAC not found. Enter it manually.</string>
+    <string name="err_device_not_found">Device not found</string>
+    <string name="err_select_device_first">Select a device first</string>
+    <string name="warn_mac_kept">MAC not resolved for new IP. Old MAC kept.</string>
+    <string name="err_network_exists">Network name already exists</string>
+    <string name="err_device_exists">Device name already exists in this network</string>
+    <string name="err_insert_failed">Failed to save</string>
+    <string name="err_update_failed">Failed to update</string>
+    <string name="err_delete_failed">Failed to delete</string>
 </resources>

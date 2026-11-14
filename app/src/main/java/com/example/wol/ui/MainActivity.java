@@ -4,11 +4,16 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.wol.R;
 
@@ -25,7 +30,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Начиная с Android 15 (targetSdk 35+) окно принудительно edge-to-edge.
+        // Явно просим контент рисоваться под системными панелями и сами
+        // добавляем отступы, чтобы элементы интерфейса не уходили под строку
+        // состояния и панель навигации.
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_main);
+
+        applySystemBarInsets(findViewById(R.id.nav_host_fragment));
 
         permissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
@@ -33,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         requestPermissionsIfNeeded();
+    }
+
+    private void applySystemBarInsets(View content) {
+        ViewCompat.setOnApplyWindowInsetsListener(content, (view, windowInsets) -> {
+            Insets bars = windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                            | WindowInsetsCompat.Type.displayCutout()
+            );
+            view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            return windowInsets;
+        });
+        ViewCompat.requestApplyInsets(content);
     }
 
     private void requestPermissionsIfNeeded() {

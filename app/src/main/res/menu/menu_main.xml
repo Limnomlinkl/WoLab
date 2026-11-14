@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_edit_network"
-        android:title="@string/edit_network" />
-    <item
-        android:id="@+id/action_edit_device"
-        android:title="@string/edit_device" />
-    <item
         android:id="@+id/action_exit"
         android:title="@string/exit" />
 </menu>

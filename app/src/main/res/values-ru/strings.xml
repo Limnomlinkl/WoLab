@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wake on LAN</string>
+    <string name="app_name">WoLab</string>
 
     <string name="network_label">Сеть</string>
     <string name="device_label">Устройство</string>
@@ -51,4 +51,23 @@
     <string name="cancel">Отмена</string>
     <string name="rename">Переименовать</string>
     <string name="delete">Удалить</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_network_card">Открыть список сетей</string>
+    <string name="cd_device_card">Открыть список устройств</string>
+
+    <!-- Validation and error messages -->
+    <string name="err_name_empty">Имя не указано</string>
+    <string name="err_invalid_ip">Некорректный IP-адрес</string>
+    <string name="err_invalid_port">Некорректный порт</string>
+    <string name="err_invalid_mac">Некорректный MAC-адрес</string>
+    <string name="err_mac_not_found">MAC не найден. Введите его вручную.</string>
+    <string name="err_device_not_found">Устройство не найдено</string>
+    <string name="err_select_device_first">Сначала выберите устройство</string>
+    <string name="warn_mac_kept">MAC для нового IP не определён. Оставлен прежний MAC.</string>
+    <string name="err_network_exists">Сеть с таким именем уже существует</string>
+    <string name="err_device_exists">Устройство с таким именем уже есть в этой сети</string>
+    <string name="err_insert_failed">Не удалось сохранить</string>
+    <string name="err_update_failed">Не удалось обновить</string>
+    <string name="err_delete_failed">Не удалось удалить</string>
 </resources>

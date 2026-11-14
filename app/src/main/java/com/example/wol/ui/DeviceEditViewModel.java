@@ -1,10 +1,13 @@
 package com.example.wol.ui;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
+import com.example.wol.R;
 import com.example.wol.data.RepositoryCallback;
 import com.example.wol.data.db.DeviceEntity;
 import com.example.wol.data.repository.DeviceRepository;
@@ -17,10 +20,12 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
 public class DeviceEditViewModel extends ViewModel {
 
+    private final Context context;
     private final DeviceRepository deviceRepository;
     private final MacResolver macResolver;
     private final ExecutorService executor;
@@ -33,11 +38,13 @@ public class DeviceEditViewModel extends ViewModel {
     private final MutableLiveData<String> warning = new MutableLiveData<>();
 
     @Inject
-    public DeviceEditViewModel(DeviceRepository deviceRepository,
+    public DeviceEditViewModel(@ApplicationContext Context context,
+                               DeviceRepository deviceRepository,
                                MacResolver macResolver,
                                ExecutorService executor,
                                PreferencesRepository preferencesRepository,
                                SavedStateHandle savedStateHandle) {
+        this.context = context;
         this.deviceRepository = deviceRepository;
         this.macResolver = macResolver;
         this.executor = executor;
@@ -66,11 +73,11 @@ public class DeviceEditViewModel extends ViewModel {
 
     public void addDevice(String name, String ip, String portStr, String manualMac) {
         if (name == null || name.trim().isEmpty()) {
-            error.setValue("Name is empty");
+            error.setValue(context.getString(R.string.err_name_empty));
             return;
         }
         if (!isValidIp(ip)) {
-            error.setValue("Invalid IP address");
+            error.setValue(context.getString(R.string.err_invalid_ip));
             return;
         }
         int port = 3389;
@@ -78,12 +85,12 @@ public class DeviceEditViewModel extends ViewModel {
             try {
                 port = Integer.parseInt(portStr.trim());
             } catch (NumberFormatException e) {
-                error.setValue("Invalid port");
+                error.setValue(context.getString(R.string.err_invalid_port));
                 return;
             }
         }
         if (manualMac != null && !manualMac.trim().isEmpty() && !isValidMac(manualMac)) {
-            error.setValue("Invalid MAC address");
+            error.setValue(context.getString(R.string.err_invalid_mac));
             return;
         }
 
@@ -98,7 +105,7 @@ public class DeviceEditViewModel extends ViewModel {
                     : finalManualMac;
 
             if (mac == null) {
-                error.postValue("MAC not found. Enter it manually.");
+                error.postValue(context.getString(R.string.err_mac_not_found));
                 return;
             }
 
@@ -131,7 +138,7 @@ public class DeviceEditViewModel extends ViewModel {
 
     public void renameDevice(DeviceEntity device, String newName) {
         if (newName == null || newName.trim().isEmpty()) {
-            error.setValue("Name is empty");
+            error.setValue(context.getString(R.string.err_name_empty));
             return;
         }
         device.name = newName.trim();
@@ -140,7 +147,7 @@ public class DeviceEditViewModel extends ViewModel {
 
     public void updateIp(DeviceEntity device, String newIp) {
         if (!isValidIp(newIp)) {
-            error.setValue("Invalid IP address");
+            error.setValue(context.getString(R.string.err_invalid_ip));
             return;
         }
         final String finalIp = newIp.trim();
@@ -148,7 +155,7 @@ public class DeviceEditViewModel extends ViewModel {
         executor.execute(() -> {
             DeviceEntity fresh = deviceRepository.getDeviceByIdSync(device.id);
             if (fresh == null) {
-                error.postValue("Device not found");
+                error.postValue(context.getString(R.string.err_device_not_found));
                 return;
             }
 
@@ -162,7 +169,7 @@ public class DeviceEditViewModel extends ViewModel {
                 @Override
                 public void onSuccess() {
                     if (mac == null) {
-                        warning.postValue("MAC not resolved for new IP. Old MAC kept.");
+                        warning.postValue(context.getString(R.string.warn_mac_kept));
                     }
                 }
 

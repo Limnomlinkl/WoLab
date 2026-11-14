@@ -40,25 +40,37 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/rename" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minWidth="0dp"
+                android:text="@string/rename"
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonChangeIp"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:text="@string/change_ip" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minWidth="0dp"
+                android:text="@string/change_ip"
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDelete"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:text="@string/delete" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minWidth="0dp"
+                android:text="@string/delete"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

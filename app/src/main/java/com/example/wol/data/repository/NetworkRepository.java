@@ -1,9 +1,12 @@
 package com.example.wol.data.repository;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.wol.R;
 import com.example.wol.data.RepositoryCallback;
 import com.example.wol.data.db.NetworkDao;
 import com.example.wol.data.db.NetworkEntity;
@@ -15,14 +18,22 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
 @Singleton
 public class NetworkRepository {
 
+    private static final String TAG = "NetworkRepository";
+
+    private final Context context;
     private final NetworkDao networkDao;
     private final ExecutorService executor;
 
     @Inject
-    public NetworkRepository(NetworkDao networkDao, ExecutorService executor) {
+    public NetworkRepository(@ApplicationContext Context context,
+                             NetworkDao networkDao,
+                             ExecutorService executor) {
+        this.context = context;
         this.networkDao = networkDao;
         this.executor = executor;
     }
@@ -41,9 +52,10 @@ public class NetworkRepository {
                 networkDao.insert(network);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
-                callback.onError("Network name already exists");
+                callback.onError(context.getString(R.string.err_network_exists));
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Insert failed" : e.getMessage());
+                Log.e(TAG, "insert failed", e);
+                callback.onError(context.getString(R.string.err_insert_failed));
             }
         });
     }
@@ -54,9 +66,10 @@ public class NetworkRepository {
                 networkDao.update(network);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
-                callback.onError("Network name already exists");
+                callback.onError(context.getString(R.string.err_network_exists));
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Update failed" : e.getMessage());
+                Log.e(TAG, "update failed", e);
+                callback.onError(context.getString(R.string.err_update_failed));
             }
         });
     }
@@ -67,7 +80,8 @@ public class NetworkRepository {
                 networkDao.delete(network);
                 callback.onSuccess();
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Delete failed" : e.getMessage());
+                Log.e(TAG, "delete failed", e);
+                callback.onError(context.getString(R.string.err_delete_failed));
             }
         });
     }

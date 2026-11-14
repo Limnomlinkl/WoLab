@@ -1,9 +1,12 @@
 package com.example.wol.ui;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.wol.R;
 import com.example.wol.data.RepositoryCallback;
 import com.example.wol.data.db.NetworkEntity;
 import com.example.wol.data.repository.NetworkRepository;
@@ -15,10 +18,12 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
 public class NetworkEditViewModel extends ViewModel {
 
+    private final Context context;
     private final NetworkRepository repository;
     private final PreferencesRepository preferencesRepository;
 
@@ -28,8 +33,10 @@ public class NetworkEditViewModel extends ViewModel {
     private final MutableLiveData<String> warning = new MutableLiveData<>();
 
     @Inject
-    public NetworkEditViewModel(NetworkRepository repository,
+    public NetworkEditViewModel(@ApplicationContext Context context,
+                                NetworkRepository repository,
                                 PreferencesRepository preferencesRepository) {
+        this.context = context;
         this.repository = repository;
         this.preferencesRepository = preferencesRepository;
         networks = repository.getAllNetworks();
@@ -53,7 +60,7 @@ public class NetworkEditViewModel extends ViewModel {
 
     public void addNetwork(String name) {
         if (name == null || name.trim().isEmpty()) {
-            error.setValue("Name is empty");
+            error.setValue(context.getString(R.string.err_name_empty));
             return;
         }
         NetworkEntity network = new NetworkEntity();
@@ -81,7 +88,7 @@ public class NetworkEditViewModel extends ViewModel {
 
     public void renameNetwork(NetworkEntity network, String newName) {
         if (newName == null || newName.trim().isEmpty()) {
-            error.setValue("Name is empty");
+            error.setValue(context.getString(R.string.err_name_empty));
             return;
         }
         network.name = newName.trim();

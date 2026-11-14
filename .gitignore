@@ -20,7 +20,12 @@ Thumbs.db
 # Signing material — never commit keys
 *.jks
 *.keystore
+*.p12
 keystore.properties
+/keystore/
+/.signing/
+/KeyForAPKs
+/app/release/
 
 # Built artifacts
 *.apk

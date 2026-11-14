@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 @Database(
         entities = {NetworkEntity.class, DeviceEntity.class},
         version = 1,
-        exportSchema = false
+        exportSchema = true
 )
 public abstract class AppDatabase extends RoomDatabase {
     public abstract NetworkDao networkDao();

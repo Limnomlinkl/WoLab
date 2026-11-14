@@ -23,8 +23,10 @@ public class DatabaseModule {
     @Provides
     @Singleton
     public AppDatabase provideDatabase(@ApplicationContext Context context) {
+        // ВАЖНО: без fallbackToDestructiveMigration() — обновление приложения
+        // не должно стирать данные о сетях и устройствах. При изменении схемы
+        // увеличивайте version и добавляйте явную Migration.
         return Room.databaseBuilder(context, AppDatabase.class, "wol-db")
-                .fallbackToDestructiveMigration()
                 .build();
     }
 

@@ -1,9 +1,12 @@
 package com.example.wol.data.repository;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.wol.R;
 import com.example.wol.data.RepositoryCallback;
 import com.example.wol.data.db.DeviceDao;
 import com.example.wol.data.db.DeviceEntity;
@@ -14,14 +17,22 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
 @Singleton
 public class DeviceRepository {
 
+    private static final String TAG = "DeviceRepository";
+
+    private final Context context;
     private final DeviceDao deviceDao;
     private final ExecutorService executor;
 
     @Inject
-    public DeviceRepository(DeviceDao deviceDao, ExecutorService executor) {
+    public DeviceRepository(@ApplicationContext Context context,
+                            DeviceDao deviceDao,
+                            ExecutorService executor) {
+        this.context = context;
         this.deviceDao = deviceDao;
         this.executor = executor;
     }
@@ -44,9 +55,10 @@ public class DeviceRepository {
                 deviceDao.insert(device);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
-                callback.onError("Device name already exists in this network");
+                callback.onError(context.getString(R.string.err_device_exists));
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Insert failed" : e.getMessage());
+                Log.e(TAG, "insert failed", e);
+                callback.onError(context.getString(R.string.err_insert_failed));
             }
         });
     }
@@ -57,9 +69,10 @@ public class DeviceRepository {
                 deviceDao.update(device);
                 callback.onSuccess();
             } catch (SQLiteConstraintException e) {
-                callback.onError("Device name already exists in this network");
+                callback.onError(context.getString(R.string.err_device_exists));
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Update failed" : e.getMessage());
+                Log.e(TAG, "update failed", e);
+                callback.onError(context.getString(R.string.err_update_failed));
             }
         });
     }
@@ -70,7 +83,8 @@ public class DeviceRepository {
                 deviceDao.delete(device);
                 callback.onSuccess();
             } catch (Exception e) {
-                callback.onError(e.getMessage() == null ? "Delete failed" : e.getMessage());
+                Log.e(TAG, "delete failed", e);
+                callback.onError(context.getString(R.string.err_delete_failed));
             }
         });
     }

@@ -1,10 +1,13 @@
 package com.example.wol.ui;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.example.wol.R;
 import com.example.wol.data.db.DeviceEntity;
 import com.example.wol.data.db.NetworkEntity;
 import com.example.wol.data.repository.DeviceRepository;
@@ -19,10 +22,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
 
+    private final Context context;
     private final PreferencesRepository preferencesRepository;
     private final LaunchOrchestrator orchestrator;
 
@@ -35,10 +40,12 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<String> error = new MutableLiveData<>();
 
     @Inject
-    public MainViewModel(NetworkRepository networkRepository,
+    public MainViewModel(@ApplicationContext Context context,
+                         NetworkRepository networkRepository,
                          DeviceRepository deviceRepository,
                          PreferencesRepository preferencesRepository,
                          LaunchOrchestrator orchestrator) {
+        this.context = context;
         this.preferencesRepository = preferencesRepository;
         this.orchestrator = orchestrator;
 
@@ -91,7 +98,7 @@ public class MainViewModel extends ViewModel {
     public void launch() {
         DeviceEntity device = selectedDevice.getValue();
         if (device == null) {
-            error.setValue("Select a device first");
+            error.setValue(context.getString(R.string.err_select_device_first));
             return;
         }
         orchestrator.start(device.ipAddress, device.macAddress, device.checkPort);
