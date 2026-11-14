@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.wol.ui.MainFragment"
+        android:label="Main">
+        <action
+            android:id="@+id/action_main_to_networkEdit"
+            app:destination="@id/networkEditFragment" />
+        <action
+            android:id="@+id/action_main_to_deviceEdit"
+            app:destination="@id/deviceEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/networkEditFragment"
+        android:name="com.example.wol.ui.NetworkEditFragment"
+        android:label="Networks" />
+
+    <fragment
+        android:id="@+id/deviceEditFragment"
+        android:name="com.example.wol.ui.DeviceEditFragment"
+        android:label="Devices">
+        <argument
+            android:name="networkId"
+            app:argType="long" />
+    </fragment>
+</navigation>

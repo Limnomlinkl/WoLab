@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WoLab</string>
+
+    <string name="network_label">Network</string>
+    <string name="device_label">Device</string>
+    <string name="no_network">No network selected</string>
+    <string name="no_device">No device selected</string>
+    <string name="no_networks">No networks. Add the first one.</string>
+    <string name="no_devices">No devices in this network</string>
+
+    <string name="launch">Launch</string>
+    <string name="status_idle">Ready to launch</string>
+    <string name="status_sending">Sending…</string>
+    <string name="status_waiting">PC is starting…</string>
+    <string name="status_success">Started</string>
+    <string name="status_failed">Failed to start</string>
+
+    <string name="select_network">Select network</string>
+    <string name="select_device">Select device</string>
+    <string name="select_network_first">Select a network first</string>
+    <string name="network_selected">Network selected: %1$s</string>
+    <string name="device_selected">Device selected: %1$s</string>
+
+    <string name="edit_network">Edit network</string>
+    <string name="edit_device">Edit device</string>
+    <string name="exit">Exit</string>
+
+    <string name="networks">Networks</string>
+    <string name="devices">Devices</string>
+
+    <string name="add_network">Add network</string>
+    <string name="network_name">Network name</string>
+    <string name="rename_network">Rename network</string>
+    <string name="delete_network">Delete network</string>
+    <string name="delete_network_confirm">Delete network \"%1$s\"?</string>
+    <string name="delete_network_with_devices">Network \"%1$s\" contains %2$d device(s). They will be deleted with the network. Continue?</string>
+
+    <string name="add_device">Add device</string>
+    <string name="device_name">Device name</string>
+    <string name="ip_address">IP address</string>
+    <string name="port_hint">Check port (default 3389)</string>
+    <string name="mac_optional">MAC (optional)</string>
+    <string name="rename_device">Rename device</string>
+    <string name="change_ip">Change IP</string>
+    <string name="delete_device">Delete device</string>
+    <string name="delete_device_confirm">Delete device \"%1$s\"?</string>
+
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Отправка UDP magic packet и TCP-проверка доступности ПК -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Определение состояния сети/Wi-Fi (для broadcast и диагностики) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--
+      CHANGE_WIFI_MULTICAST_STATE НЕ добавляется: для UDP broadcast на
+      255.255.255.255:9 MulticastLock не требуется. Разрешение понадобилось бы
+      только для multicast (mDNS/SSDP), которого в MVP нет.
+    -->
+
+    <!--
+      NEARBY_WIFI_DEVICES добавлен по ТЗ для API 33+. В MVP SSID не читается,
+      поэтому neverForLocation корректен и ACCESS_FINE_LOCATION не нужен.
+      Реально для WoL это разрешение не критично, но запрашивается в MainActivity.
+    -->
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="tiramisu" />
+
+    <application
+        android:name=".WolApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WolApp">
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

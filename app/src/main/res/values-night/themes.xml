@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WolApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Material 3 DayNight автоматически даёт светлую/тёмную тему. -->
+    </style>
+</resources>

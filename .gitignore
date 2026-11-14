@@ -1,0 +1,27 @@
+# Gradle
+.gradle/
+build/
+
+# Local configuration (SDK path, machine-specific settings)
+local.properties
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+.navigation/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Signing material — never commit keys
+*.jks
+*.keystore
+keystore.properties
+
+# Built artifacts
+*.apk
+*.aab

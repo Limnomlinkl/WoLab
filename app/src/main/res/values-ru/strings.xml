@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wake on LAN</string>
+
+    <string name="network_label">Сеть</string>
+    <string name="device_label">Устройство</string>
+    <string name="no_network">Сеть не выбрана</string>
+    <string name="no_device">Устройство не выбрано</string>
+    <string name="no_networks">Нет сетей. Добавьте первую.</string>
+    <string name="no_devices">Нет устройств в этой сети</string>
+
+    <string name="launch">Запуск</string>
+    <string name="status_idle">Готов к запуску</string>
+    <string name="status_sending">Отправка…</string>
+    <string name="status_waiting">ПК запускается…</string>
+    <string name="status_success">Запустился</string>
+    <string name="status_failed">Не удалось запустить</string>
+
+    <string name="select_network">Выберите сеть</string>
+    <string name="select_device">Выберите устройство</string>
+    <string name="select_network_first">Сначала выберите сеть</string>
+    <string name="network_selected">Сеть выбрана: %1$s</string>
+    <string name="device_selected">Устройство выбрано: %1$s</string>
+
+    <string name="edit_network">Изменить сеть</string>
+    <string name="edit_device">Изменить устройство</string>
+    <string name="exit">Выйти</string>
+
+    <string name="networks">Сети</string>
+    <string name="devices">Устройства</string>
+
+    <string name="add_network">Добавить сеть</string>
+    <string name="network_name">Имя сети</string>
+    <string name="rename_network">Переименовать сеть</string>
+    <string name="delete_network">Удалить сеть</string>
+    <string name="delete_network_confirm">Удалить сеть \"%1$s\"?</string>
+    <string name="delete_network_with_devices">В сети \"%1$s\" есть устройства: %2$d. Они будут удалены вместе с сетью. Продолжить?</string>
+
+    <string name="add_device">Добавить устройство</string>
+    <string name="device_name">Имя устройства</string>
+    <string name="ip_address">IP-адрес</string>
+    <string name="port_hint">Порт проверки (по умолчанию 3389)</string>
+    <string name="mac_optional">MAC (опционально)</string>
+    <string name="rename_device">Переименовать устройство</string>
+    <string name="change_ip">Изменить IP</string>
+    <string name="delete_device">Удалить устройство</string>
+    <string name="delete_device_confirm">Удалить устройство \"%1$s\"?</string>
+
+    <string name="add">Добавить</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="rename">Переименовать</string>
+    <string name="delete">Удалить</string>
+</resources>
